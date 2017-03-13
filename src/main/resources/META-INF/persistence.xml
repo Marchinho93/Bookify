@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	
+	<persistence-unit name="models-unit" transaction-type="RESOURCE_LOCAL">
+	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>bookify.model.Book</class>
+		<class>bookify.model.Author</class>
+		<class>bookify.model.Category</class>
+		<class>bookify.model.Administrator</class>
+		<class>bookify.model.Loan</class>
+		<class>bookify.model.Serie</class>
+		<class>bookify.model.User</class>
+
+		<properties>
+		<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="postgres" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Bookify" />
+		<!-- Hibernate properties -->
+	        		<property name="hibernate.show_sql" value="true" />
+            		<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+	 <!-- <property name="hibernate.hbm2ddl.auto" value="create"/>  -->
+			<property name="hibernate.id.new_generator_mappings" value="false"/>
+			<property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
+		</properties>
+	</persistence-unit>
+</persistence>

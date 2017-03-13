@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<div class="container maincontainer">
+    <div class="cover-container">
+
+        <div class="masthead clearfix">
+            <div class="inner">
+                <h3 class="masthead-brand">
+                    <ng-md-icon style="fill:white" icon="book" size="30"></ng-md-icon>
+                    <b>Bookify</b>
+                </h3>
+                <nav>
+                    <ul class="nav masthead-nav">
+                        <li ng-repeat="link in menu" ng-class="{active : activeMenu === link.label}"><a
+                                href="#{{link.link}}" ng-click="setActive(link.label)"><b>{{link.label}}</b></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <div class="inner cover">
+            <div class="jumbotron home">
+                <h1 class="cover-heading">Biblioteca</h1>
+                <p class="lead">Gestore per l'organizzazione dei libri e i prestiti
+                    agli iscritti.</p></div>
+        </div>
+
+        <div class="mastfoot">
+            <div class="inner">
+                <p>
+                    Cover template for <a href="http://getbootstrap.com">Bootstrap</a>,
+                    by <a href="https://twitter.com/mdo">@mdo</a>.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</html>

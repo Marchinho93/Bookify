@@ -1,0 +1,15 @@
+.menu-icon{
+	position:relative;
+	top:17%;
+	fill:black;
+}
+
+.md-fab.md-button.md-green{
+	background-color:#0ca966;
+}
+.md-fab.md-button.md-green:not([disabled]):hover{
+	background-color:#83d2a0;
+}
+.md-fab.md-button.md-green.md-focused:not([disabled]){
+	background-color:#0ca966;
+}

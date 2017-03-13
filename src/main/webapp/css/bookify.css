@@ -1,0 +1,76 @@
+@CHARSET "ISO-8859-1";
+
+.container.maincontainer{
+	padding:1%;
+	height:100%;
+	border-bottom-right-radius:20px;
+}
+
+.site-wrapper{
+	box-shadow: inset 0 0 100px rgba(11,10,15,1);
+	background-color: #2b2a39;
+}
+
+.container.login{
+	width:40%;
+	background-color: #f9ba73;
+	border: 5px solid  	#f69a4a;
+	border-bottom-right-radius:25px;
+	box-shadow: inset 0 0 100px rgba(162, 98, 43,1), 0 0 30px rgba(0,0,0,1);
+	min-width: 200px;
+}
+
+.container.admin{
+    width:100%;
+    background-color: #f9ba73;
+    border: 5px solid  	#f69a4a;
+    border-bottom-right-radius:25px;
+    box-shadow: inset 0 0 100px rgba(162, 98, 43,1), 0 0 30px rgba(0,0,0,1);
+    min-width: 200px;
+}
+
+.jumbotron.home{
+	border-radius:0;
+	border-bottom-right-radius:25px;
+	border: 5px solid  	#f69a4a;
+	background-color: #f9ba73;
+	box-shadow: inset 0 0 100px rgba(162, 98, 43,1),0 0 30px rgba(0,0,0,1);
+}
+
+.form-group.login{
+	margin-top:5%;
+	margin-bottom:5%;
+}
+.form-control.login{
+	margin: auto;
+	width:100%;
+	border-bottom-right-radius:15px;
+	box-shadow:  0 0 2px #f69a4a;
+}
+
+.transparent{
+	background-color:transparent;
+}
+.md-button.last{
+	border-bottom-right-radius:15px;
+}
+
+a:not(.md-button):hover{
+	color:white;
+}
+
+md-dialog.md-default-theme{
+	background-color: #000000;
+	opacity: .85;
+	border-bottom-right-radius: 25px;
+}
+
+md-backdrop.md-opaque{
+	opacity: .7;
+}
+
+/*
+background-image: url(http://theplanetd.com/images/HDR-matterhorn-5-Edit.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: right bottom;*/

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.min.css" />
+<link rel="stylesheet" href="button.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-aria.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+<meta charset="ISO-8859-1">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>
+<script src="button.js"></script>
+</head>
+<body >
+		<div id="button" class="lock-size"  ng-app="button" ng-controller="buttonCtrl as b" ng-cloak>
+		
+			<md-fab-speed-dial layout="column" layout-align="left center" md-open="b.isOpen1" md-direction="right" class="md-scale">
+				<md-fab-trigger>
+					<md-button class="md-fab md-green" href="#" aria-label="menu">
+						<ng-md-icon icon="book" class="menu-icon" size="36"></ng-md-icon>
+					</md-button>
+				</md-fab-trigger>
+				<md-fab-actions>
+					<md-button ng-repeat="icon in b.menu.icons1" class="md-fab md-raised md-mini" aria-label="{{icon.label}}">
+						<ng-md-icon class="menu-icon" icon="{{icon.icon}}"></ng-md-icon>
+					</md-button>
+				</md-fab-actions>
+				
+			</md-fab-speed-dial>
+						<md-fab-speed-dial layout="row" layout-align="left center" md-open="b.isOpen2" md-direction="right" class="md-scale">
+				<md-fab-trigger>
+					<md-button class="md-fab md-warn" href="#" aria-label="menu">
+						<ng-md-icon icon="book" class="menu-icon" size="36"></ng-md-icon>
+					</md-button>
+				</md-fab-trigger>
+				<md-fab-actions>
+					<md-button ng-repeat="icon in b.menu.icons" class="md-fab md-raised md-mini" aria-label="{{icon.label}}">
+						<ng-md-icon class="menu-icon" icon="{{icon.icon}}"></ng-md-icon>
+					</md-button>
+				</md-fab-actions>
+				
+			</md-fab-speed-dial>
+		</div>
+</body>
+</html>
