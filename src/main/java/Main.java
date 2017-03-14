@@ -41,7 +41,7 @@ public class Main {
 		Serie s1 = new Serie("cavalli", bl1);
 		b1.setSerie(s1);
 		
-		Administrator adm1 = new Administrator("peppe", "ficco", "mario", "biondi", new Date(10,11,1993));
+		Administrator adm1 = new Administrator("peppe", "ficco", "mario", "biondi", new Date(10,11,1993), "via lepre", "322324242", "roma" , "asdawd@yahoo.it");
 		User u1 = new User("pino", "daniele", "pino", "daniele", new Date(2,12,1960), new Date(10,11,1993), "via lepre", "322324242", "roma" , "asdawd@yahoo.it");
 		Loan l1 = new Loan(new Date(3,3,2017), null, b1, u1);
 		em.getTransaction().begin();

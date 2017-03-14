@@ -20,8 +20,9 @@ public class AdministratorServiceImpl implements AdministratorService{
 		return administrator;
 	}
 	
-	public Administrator create(String id, String password, String name, String surname, Date birthday){
-		Administrator administrator = new Administrator(id, password, name, surname, birthday);
+	public Administrator create(String id, String password, String name, String surname, Date birthday, String address,
+			String phone, String city, String email){
+		Administrator administrator = new Administrator(id, password, name, surname, birthday, address, phone, city, email);
 		administratorDao.create(administrator);
 		return administrator;
 	}

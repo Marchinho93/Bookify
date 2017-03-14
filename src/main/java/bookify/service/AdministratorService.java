@@ -9,7 +9,8 @@ public interface AdministratorService {
 
 	Administrator create(Administrator administrator);
 	
-	Administrator create(String id, String password, String name, String surname, Date birthday);
+	Administrator create(String id, String password, String name, String surname, Date birthday, String address,
+			String phone, String city, String email);
 
 	Administrator findById(String id);
 

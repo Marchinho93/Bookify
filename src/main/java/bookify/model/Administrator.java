@@ -34,16 +34,29 @@ public class Administrator {
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date birthday;
+	@Column
+	private String address;
+	@Column
+	private String phone;
+	@Column
+	private String city;
+	@Column(nullable = false)
+	private String email;
+	
 	
 	public Administrator(){}
 	
-	public Administrator(String id, String password, String name, String surname, Date birthday) {
-		super();
+	public Administrator(String id, String password, String name, String surname, Date birthday, String address,
+			String phone, String city, String email) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.birthday = birthday;
+		this.address = address;
+		this.phone = phone;
+		this.city = city;
+		this.email = email;
 	}
 
 	public String getId() {
@@ -84,6 +97,42 @@ public class Administrator {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public long getCode() {
+		return code;
 	}
 	
 	
