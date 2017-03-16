@@ -29,9 +29,10 @@ bookify.controller("loginCtrl", function ($scope,authEngine) {
 });
 
 bookify.controller("adminCtrl", function ($scope, authEngine, session) {
-    authEngine.authRequired('ADMIN');
+    if(authEngine.authRequired('ADMIN') == true){
+    console.log(session.getAuthenticated());
     console.log(session.getAuthUser());
-    console.log(session.authType);
+    console.log(session.getAuthType());
     $scope.adminData = session.authUser;
 
     $scope.activeMenu = "Admin";
@@ -43,6 +44,7 @@ bookify.controller("adminCtrl", function ($scope, authEngine, session) {
         "label": "Logout",
         "link": "/logout"
     }];
+    }
 });
 
 bookify.controller("logoutCtrl", function ($scope, authEngine) {

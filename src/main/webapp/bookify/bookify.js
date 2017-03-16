@@ -1,7 +1,7 @@
 //create the module "bookify"
-var bookify = angular.module('bookify', ['ngRoute', 'ngMaterial', 'ngMdIcons']);
+var bookify = angular.module('bookify', ['ngRoute', 'LocalStorageModule', 'ngMaterial', 'ngMdIcons']);
 
-bookify.config(function ($routeProvider) {
+bookify.config(function ($routeProvider,localStorageServiceProvider) {
     $routeProvider
         .when("/", {
             templateUrl: "view/main.htm",
@@ -21,5 +21,9 @@ bookify.config(function ($routeProvider) {
         .when("/logout", {
             templateUrl: "view/main.htm",
             controller: "logoutCtrl"
-        })
+        });
+
+    localStorageServiceProvider
+        .setPrefix('bookify')
+        .setDefaultToCookie(false);
 });

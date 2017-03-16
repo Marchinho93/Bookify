@@ -1,72 +1,49 @@
-bookify.factory('initUser', ['$http', 'session', '$location', '$mdDialog', function ($http, session, $location, $mdDialog) {
-    var self = this;
-    self.dbAlert = function () {
-        $mdDialog.show(
-            $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('Database Error')
-                .textContent('Please, retry later')
-                .ariaLabel('Alert')
-                .ok('Ok')
-        ).then(function () {
-            $location.path("");
-        });
-    };
-
+bookify.factory('authUtility', ['$http', function ($http) {
     return {
-        initAdmin: function (id) {
-            var packet = {
-                params: {
-                    'id': id
-                }
+        refreshCSRF: function(){
+            return $http.get('refreshCSRF');
+        },
+        setAdminData: function(data){
+            userData = {
+                name: data.name,
+                surname: data.surname,
+                birthday: data.birthday,
+                address: data.address,
+                phone: data.phone,
+                city: data.city,
+                email: data.email
             };
-            $http.post('initAdmin', "", packet)
-                .success(function (data) {
-                    userData = {
-                        name: data.name,
-                        surname: data.surname,
-                        birthday: data.birthday,
-                        address: data.address,
-                        phone: data.phone,
-                        city: data.city,
-                        email: data.email
-                    };
-                    session.setAuthUser(userData);
-                    $location.path("admin");
-                })
-                .error(function () {
-                    self.dbAlert();
-                    session.invalidate();
-                    return new Error("dbError");
-                });
+            return userData;
+        },
+        setUserData: function(data){
+            userData = {
+                name: data.name,
+                surname: data.surname,
+                birthday: data.birthday,
+                subscription: data.subscription,
+                address: data.address,
+                phone: data.phone,
+                city: data.city,
+                email: data.email
+            };
+            return userData;
+        },
+        initAdmin: function (id) {
+                var packet = {
+                    params: {
+                        'id': id
+                    }
+                };
+                return $http.post('initAdmin', "", packet);
+
         },
         initUser: function (id) {
-            var packet = {
-                params: {
-                    'id': id
-                }
-            };
-            $http.post('initUser', "", packet)
-                .success(function (data) {
-                    userData = {
-                        name: data.name,
-                        surname: data.surname,
-                        birthday: data.birthday,
-                        subscription: data.subscription,
-                        address: data.address,
-                        phone: data.phone,
-                        city: data.city,
-                        email: data.email
-                    };
-                    session.setAuthUser(userData);
-                    $location.path("user");
-                })
-                .error(function () {
-                    self.dbAlert();
-                    session.invalidate();
-                    return new Error("dbError");
-                });
+                var packet = {
+                    params: {
+                        'id': id
+                    }
+                };
+                return $http.post('initUser', "", packet);
         }
     }
 }]);
@@ -78,6 +55,11 @@ bookify.factory('session', [function () {
     var authType = null;
 
     return {
+        init: function(){
+          this.authenticated = false;
+          this.authUser = null;
+          this.authType = [];
+        },
         setAuthenticated: function (value) {
             this.authenticated = value;
         },
@@ -98,43 +80,14 @@ bookify.factory('session', [function () {
         },
         invalidate: function () {
             this.authenticated = false;
-            this.authType = null;
+            this.authType = [];
             this.authUser = null;
         }
     }
-
 }]);
 
-bookify.factory('authEngine', ['$http', 'initUser', 'session', '$location', '$mdDialog', function ($http, initUser, session, $location, $mdDialog) {
-    var self = this;
-
-    self.loginAlert = function () {
-        $mdDialog.show(
-            $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('Username or Password incorrect')
-                .textContent('Please, insert correct credentials')
-                .ariaLabel('Alert')
-                .ok('Ok')
-        );
-    };
-
-    self.authAlert = function () {
-        $mdDialog.show(
-            $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('Not enough permission')
-                .textContent("You don't have enough permission for this action")
-                .ariaLabel('Alert')
-                .ok('Ok')
-        ).then(function () {
-            $location.path('');
-        });
-    };
-
-
+bookify.factory('authEngine', ['$http', 'authUtility', 'session', 'localStorageService', '$location', 'exceptionHandler', function ($http, authUtility, session, localStorageService, $location, exceptionHandler) {
+    session.init();
     return {
         login: function (id, password) {
             var packet = {
@@ -148,31 +101,100 @@ bookify.factory('authEngine', ['$http', 'initUser', 'session', '$location', '$md
                     session.setAuthenticated(true);
                     session.setAuthType(data.roles);
                     if (session.getAuthType().indexOf("ADMIN") !== -1) {
-                        initUser.initAdmin(data.id);
+                        authUtility.refreshCSRF().success(function () {
+                            authUtility.initAdmin(data.id).success(function (data) {
+                                session.setAuthUser(authUtility.setAdminData(data));
+                                $location.path("admin");
+                            }).error(function () {
+                                exceptionHandler.dbAlert();
+                                session.invalidate();
+                                return new Error("dbError");
+                            });
+                        });
                     }
                     else if (session.getAuthType().indexOf("USER") !== -1) {
-                        initUser.initUser(data.id);
-                    }
+                        authUtility.refreshCSRF().success(function () {
+                            authUtility.initUser(data.id).success(function (data) {
+                                session.setAuthUser(authUtility.setUserData(data));
+                                $location.path("user");
+                            }).error(function () {
+                                exceptionHandler.dbAlert();
+                                session.invalidate();
+                                return new Error("dbError");
+                            });
+                        });
+                    }//non funziona, metter dentro e finire implementazione
+                    localStorageService.set('Authenticated', session.getAuthenticated());
+                    localStorageService.set('AuthType', session.getAuthType());
+                    localStorageService.set('AuthUser', session.getAuthUser());
                 })
                 .error(function () {
-                    self.loginAlert();
+                    exceptionHandler.loginAlert();
                     session.invalidate();
                 });
-
         },
         logout: function () {
-            $http.post("logout", "")
+            var packet = "";
+            $http.post("logout", "", packet)
                 .success(function () {
                     $location.path("");
                     session.invalidate();
                 })
-                .error()
+                .error(function () {
+                })
         },
         authRequired: function (required) {
-            if (session.getAuthenticated() !== true || session.getAuthType().indexOf(required) === -1 || session.getAuthUser() === null) {
-                self.authAlert();
+            if (session.getAuthenticated() != true || session.getAuthType().indexOf(required) == -1 || session.getAuthUser() == null ) {
+                console.log(session.getAuthenticated() != true);
+                console.log(session.getAuthType().indexOf(required) == -1);
+                console.log(session.getAuthUser() == null);
+                exceptionHandler.authAlert();
                 session.invalidate();
+                return false;
             }
+            return true;
+        }
+    };
+}]);
+
+bookify.factory('exceptionHandler', ['$mdDialog', '$location', function ($mdDialog, $location) {
+    return {
+        dbAlert: function () {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Database Error')
+                    .textContent('Please, retry later')
+                    .ariaLabel('Alert')
+                    .ok('Ok')
+            ).then(function () {
+                $location.path("login");
+            });
+        },
+        loginAlert: function () {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Username or Password incorrect')
+                    .textContent('Please, insert correct credentials')
+                    .ariaLabel('Alert')
+                    .ok('Ok')
+            );
+        },
+        authAlert: function () {
+            $location.path('');
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Not enough permission')
+                    .textContent("You don't have enough permission for this action")
+                    .ariaLabel('Alert')
+                    .ok('Ok')
+            ).then(function () {
+            });
         }
     };
 }]);
