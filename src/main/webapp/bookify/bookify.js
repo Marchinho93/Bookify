@@ -13,7 +13,13 @@ bookify.config(function ($routeProvider,localStorageServiceProvider) {
         })
         .when("/admin", {
             templateUrl: "view/admin.htm",
-            controller: "adminCtrl"
+            controller: "adminCtrl",
+            controllerAs: "ctrl"
+        })
+        .when("/bookManager", {
+            templateUrl: "view/bookManager.htm",
+            controller: "bookManagerCtrl",
+            controllerAs: "bookCtrl"
         })
         .when("/user", {
             templateUrl: "view/user.htm"

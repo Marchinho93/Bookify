@@ -13,8 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @SequenceGenerator(name = "serieSeq", sequenceName = "serieSeq", initialValue = 1, allocationSize = 1)
@@ -30,8 +29,8 @@ public class Serie {
 	@Column(nullable = false)
 	private String name;
 	
-	@OneToMany(mappedBy="code",cascade = CascadeType.PERSIST)
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="serie",cascade = CascadeType.PERSIST)
+	@JsonIgnore
 	private List<Book> books;
 	
 	public Serie(){}

@@ -26,41 +26,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	 auth.userDetailsService(bookifyUserDetailsService);
+		auth.userDetailsService(bookifyUserDetailsService);
 	}
 
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.formLogin()
-		 .loginPage("/")
-		 .loginProcessingUrl("/login")
-		 .usernameParameter("id")
-		 .passwordParameter("password")
-		 .permitAll()
-		 .successHandler(new BookifyLoginSuccessHandler())
-		 .failureHandler(new BookifyLoginFailureHandler())
+		.loginPage("/")
+		.loginProcessingUrl("/login")
+		.usernameParameter("id")
+		.passwordParameter("password")
+		.permitAll()
+		.successHandler(new BookifyLoginSuccessHandler())
+		.failureHandler(new BookifyLoginFailureHandler())
 		.and()
 		.httpBasic()
 		.and()
 		.logout()
-		 .logoutUrl("/logout")
-		 .logoutSuccessUrl("/")
-		 .invalidateHttpSession(true)
+		.logoutUrl("/logout")
+		.logoutSuccessUrl("/")
+		.invalidateHttpSession(true)
 		.and()
 		.authorizeRequests()
-		 .antMatchers("/css/**", "/bookify/**", "/view/**")
-		 .permitAll()
-		 .anyRequest()
-		 .authenticated()
-		 .and()
+		.antMatchers("/css/**", "/bookify/**", "/view/**")
+		.permitAll()
+		.anyRequest()
+		.authenticated()
+		.and()
 		.csrf()
-		 .csrfTokenRepository(csrfTokenRepository())
-		 .ignoringAntMatchers("/refreshCSRF")
+		.csrfTokenRepository(csrfTokenRepository())
+		.ignoringAntMatchers("/login")
 		.and()
 		.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
-		 
+
+
 	}
-	
+
 	@Bean
 	public CsrfTokenRepository csrfTokenRepository(){
 		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();

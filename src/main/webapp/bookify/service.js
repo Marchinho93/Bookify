@@ -5,9 +5,11 @@ bookify.factory('authUtility', ['$http', function ($http) {
         },
         setAdminData: function (data) {
             userData = {
+                code: data.code,
+                id: data.id,
                 name: data.name,
                 surname: data.surname,
-                birthday: data.birthday,
+                birthday: new Date(data.birthday),
                 address: data.address,
                 phone: data.phone,
                 city: data.city,
@@ -17,10 +19,12 @@ bookify.factory('authUtility', ['$http', function ($http) {
         },
         setUserData: function (data) {
             userData = {
+                code: data.code,
+                id: data.id,
                 name: data.name,
                 surname: data.surname,
-                birthday: data.birthday,
-                subscription: data.subscription,
+                birthday: new Date(data.birthday),
+                subscription: new Date(data.subscription),
                 address: data.address,
                 phone: data.phone,
                 city: data.city,
@@ -81,7 +85,7 @@ bookify.factory('session', [function () {
             return this.authUser;
         },
         getCreated: function () {
-          return this.created;  
+            return this.created;
         },
         setCreated: function (created) {
             this.created = created;
@@ -127,7 +131,7 @@ bookify.factory('authEngine', ['$http', 'authUtility', 'session', 'sessionCacheS
                             authUtility.initUser(data.id).success(function (data) {
                                 session.setAuthUser(authUtility.setUserData(data));
                                 sessionCacheService.saveSession();
-                                
+
                                 $location.path("user");
                             }).error(function () {
                                 exceptionHandler.dbAlert();
@@ -149,16 +153,22 @@ bookify.factory('authEngine', ['$http', 'authUtility', 'session', 'sessionCacheS
                 .success(function () {
                     $location.path("");
                     session.invalidate();
+                    sessionCacheService.clear();
                 })
-                .error(function () {})
+                .error(function () {
+                })
         },
         authRequired: function (required) {
-            if (session.getAuthenticated() != true || session.getAuthType().indexOf(required) == -1 || session.getAuthUser() == null) {
+            if (sessionCacheService.isValid()) {
+                sessionCacheService.loadSession();
+            }
+            else if (session.getAuthenticated() != true || session.getAuthType().indexOf(required) == -1 || session.getAuthUser() == null) {
                 console.log(session.getAuthenticated() != true);
                 console.log(session.getAuthType().indexOf(required) == -1);
                 console.log(session.getAuthUser() == null);
                 exceptionHandler.authAlert();
                 session.invalidate();
+                sessionCacheService.clear();
                 return false;
             }
             return true;
@@ -171,12 +181,12 @@ bookify.factory('exceptionHandler', ['$mdDialog', '$location', function ($mdDial
         dbAlert: function () {
             $mdDialog.show(
                 $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('Database Error')
-                .textContent('Please, retry later')
-                .ariaLabel('Alert')
-                .ok('Ok')
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Database Error')
+                    .textContent('Please, retry later')
+                    .ariaLabel('Alert')
+                    .ok('Ok')
             ).then(function () {
                 $location.path("login");
             });
@@ -184,60 +194,63 @@ bookify.factory('exceptionHandler', ['$mdDialog', '$location', function ($mdDial
         loginAlert: function () {
             $mdDialog.show(
                 $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('Username or Password incorrect')
-                .textContent('Please, insert correct credentials')
-                .ariaLabel('Alert')
-                .ok('Ok')
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Username or Password incorrect')
+                    .textContent('Please, insert correct credentials')
+                    .ariaLabel('Alert')
+                    .ok('Ok')
             );
         },
         authAlert: function () {
             $location.path('');
             $mdDialog.show(
                 $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('Not enough permission')
-                .textContent("You don't have enough permission for this action")
-                .ariaLabel('Alert')
-                .ok('Ok')
-            ).then(function () {});
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Not enough permission')
+                    .textContent("You don't have enough permission for this action")
+                    .ariaLabel('Alert')
+                    .ok('Ok')
+            ).then(function () {
+            });
         },
         cacheAlert: function () {
             console.log("nada");
             $mdDialog.show(
                 $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('Cache not available')
-                .textContent("Your browser isn't compatible with local storage.")
-                .ariaLabel('Alert')
-                .ok('Ok')
-            ).then(function () {});
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Cache not available')
+                    .textContent("Your browser isn't compatible with local storage.")
+                    .ariaLabel('Alert')
+                    .ok('Ok')
+            ).then(function () {
+            });
         }
     };
 }]);
 
 bookify.factory('sessionCacheService', ['localStorageService', 'session', '$location', 'exceptionHandler', function (localStorageService, session, $location, exceptionHandler) {
-		if (localStorageService.isSupported) {
-            console.log("è supportato");
-            if (localStorageService.get('authenticated') && (((new Date).getTime()) - (localStorageService.get('created'))) < 1800000) {
-                console.log("sono nell'if");
-                session.setAuthenticated(localStorageService.get('authenticated'));
-                session.setAuthType(localStorageService.get('authType'));
-                session.setAuthUser(localStorageService.get('authUser'));
-                session.setCreated(localStorageService.get('created'));
-                $location.path('admin');
-            }
-            else{
-                console.log(localStorageService.get('authenticated'));
-                console.log(((new Date).getTime()) - (localStorageService.get('created')) < 1800000);
-                session.setAuthenticated(false);
-                session.setAuthType([]);
-                session.setAuthUser(null);
-                session.setCreated(null);
-            };
+    if (localStorageService.isSupported) {
+        console.log("è supportato");
+        if (localStorageService.get('authenticated') && (((new Date).getTime()) - (localStorageService.get('created'))) < 1800000) {
+            console.log("sono nell'if");
+            session.setAuthenticated(localStorageService.get('authenticated'));
+            session.setAuthType(localStorageService.get('authType'));
+            session.setAuthUser(localStorageService.get('authUser'));
+            session.setCreated(localStorageService.get('created'));
+            $location.path('admin');
+        }
+        else {
+            console.log(localStorageService.get('authenticated'));
+            console.log(((new Date).getTime()) - (localStorageService.get('created')) < 1800000);
+            session.setAuthenticated(false);
+            session.setAuthType([]);
+            session.setAuthUser(null);
+            session.setCreated(null);
+        }
+        ;
         return {
             saveSession: function () {
                 localStorageService.set('authenticated', session.getAuthenticated());
@@ -247,9 +260,77 @@ bookify.factory('sessionCacheService', ['localStorageService', 'session', '$loca
             },
             clear: function () {
                 localStorageService.clearAll();
+            },
+            isValid: function () {
+                return ( localStorageService.get('authenticated') && (((new Date).getTime()) - (localStorageService.get('created'))) < 1800000 );
+            },
+            loadSession: function () {
+                session.setAuthenticated(localStorageService.get('authenticated'));
+                session.setAuthType(localStorageService.get('authType'));
+                session.setAuthUser(localStorageService.get('authUser'));
+                session.setCreated(localStorageService.get('created'));
             }
         };
     } else {
         exceptionHandler.cacheAlert();
     }
+}]);
+
+bookify.service('adminUtility', ['$http', 'session', 'sessionCacheService', '$mdDialog', 'authUtility', '$rootScope', function ($http, session, sessionCacheService, $mdDialog, authUtility, $rootScope) {
+   var self = this;
+   self.adminData = session.getAuthUser();
+
+    self.editAdmin =
+        function ($event) {
+            $mdDialog.show({
+            controller: "adminDiagCtrl",
+            controllerAs: 'ctrlDiag',
+            templateUrl: 'view/editAdmin.htm',
+            parent: angular.element(popupContainer),
+            targetEvent: $event,
+            clickOutsideToClose: false
+        }).then(function (answer) {
+            if (answer == "ok") {
+                var packet = {
+                    'code': self.adminData.code,
+                    'id': self.adminData.id,
+                    'name': self.adminData.name,
+                    'surname': self.adminData.surname,
+                    'birthday': self.adminData.birthday,
+                    'address': self.adminData.address,
+                    'phone': self.adminData.phone,
+                    'city': self.adminData.city,
+                    'email': self.adminData.email
+                };
+                $http.post("editAdmin", packet).success(function (data) {
+                    admin = authUtility.setAdminData(data);
+                    session.setAuthUser(admin);
+                    sessionCacheService.saveSession();
+                    $rootScope.$broadcast('updated');
+                }).error(function () {
+                    $rootScope.$broadcast('updated');
+                });
+            }
+        }, function () {
+               $rootScope.$broadcast('updated');
+        });
+        };
+
+    self.writeEditedAdminData = function (data) {
+        self.adminData = data;
+    };
+}]);
+
+bookify.service('bookManager', ['$http', '$rootScope', 'exceptionHandler', function($http, $rootScope, exceptionHandler){
+    var self = this;
+    self.bookList = "";
+    self.populate = function (){
+        $http.get('findAll')
+        .success(function(data){
+            self.bookList = data;
+            $rootScope.$broadcast('updated');
+        }).error(function (){
+            exceptionHandler.dbAlert();
+        });
+    };
 }]);

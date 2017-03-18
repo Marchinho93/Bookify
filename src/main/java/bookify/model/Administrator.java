@@ -25,7 +25,7 @@ public class Administrator {
 	private long code;
 	@Column(nullable = false, unique = true)
 	private String id;
-	@Column(nullable = false)
+	@Column(updatable=false)
 	private String password;
 	@Column(nullable = false)
 	private String name;

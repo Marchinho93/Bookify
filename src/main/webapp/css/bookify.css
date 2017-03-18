@@ -1,72 +1,151 @@
 @CHARSET "ISO-8859-1";
-
-.container.maincontainer{
-	padding:1%;
-	height:100%;
-	border-bottom-right-radius:20px;
+/* CSS Containers*/
+.container.maincontainer {
+    padding: 1%;
+    height: 100%;
+    border-bottom-right-radius: 20px;
 }
 
-.site-wrapper{
-	box-shadow: inset 0 0 100px rgba(11,10,15,1);
-	background-color: #2b2a39;
+.site-wrapper {
+    box-shadow: inset 0 0 100px rgba(11, 10, 15, 1);
+    background: #1f1c18;
+    background-image: url("p1.png"), url("p2.png");
+    background-repeat: repeat-x, repeat;
 }
 
-.container.login{
-	width:40%;
-	background-color: #f9ba73;
-	border: 5px solid  	#f69a4a;
-	border-bottom-right-radius:25px;
-	box-shadow: inset 0 0 100px rgba(162, 98, 43,1), 0 0 30px rgba(0,0,0,1);
-	min-width: 200px;
+.site-wrapper-inner {
+    vertical-align: top;
 }
 
-.container.admin{
-    width:100%;
-    background-color: #f9ba73;
-    border: 5px solid  	#f69a4a;
-    border-bottom-right-radius:25px;
-    box-shadow: inset 0 0 100px rgba(162, 98, 43,1), 0 0 30px rgba(0,0,0,1);
+.cover {
+    margin-top: 10%;
+}
+
+.container.login {
+    width: 40%;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 5px;
+    border-bottom-right-radius: 25px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 1);
     min-width: 200px;
 }
 
-.jumbotron.home{
-	border-radius:0;
-	border-bottom-right-radius:25px;
-	border: 5px solid  	#f69a4a;
-	background-color: #f9ba73;
-	box-shadow: inset 0 0 100px rgba(162, 98, 43,1),0 0 30px rgba(0,0,0,1);
+.container.admin {
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 5px;
+    border-bottom-right-radius: 25px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 1);
+    min-width: 200px;
 }
 
-.form-group.login{
-	margin-top:5%;
-	margin-bottom:5%;
-}
-.form-control.login{
-	margin: auto;
-	width:100%;
-	border-bottom-right-radius:15px;
-	box-shadow:  0 0 2px #f69a4a;
+.jumbotron.home {
+    border-radius: 5px;
+    border-bottom-right-radius: 25px;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, .5);
+    background-image: url(http://www.ilgiornale.it/sites/default/files/styles/large/public/foto/2015/04/26/1430028126-pila-libri.jpg);
 }
 
-.transparent{
-	background-color:transparent;
-}
-.md-button.last{
-	border-bottom-right-radius:15px;
+.masthead {
+    position: relative;
 }
 
-a:not(.md-button):hover{
-	color:white;
+.mastfoot {
+    position: relative;
 }
 
-md-dialog.md-default-theme{
-	background-color: #000000;
-	opacity: .85;
-	border-bottom-right-radius: 25px;
+/*CSS login form*/
+.form-group.login {
+    margin-top: 10%;
+    margin-bottom: 5%;
 }
 
-md-backdrop.md-opaque{
-	opacity: .7;
+.form-control.login {
+    margin: auto;
+    width: 100%;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0 0 2px #f69a4a;
+}
+
+.transparent {
+    background-color: transparent;
+}
+
+/*CSS Materials*/
+.md-button.last {
+    border-bottom-right-radius: 15px;
+    background-color: rgb(48, 52, 75);
+}
+
+a:not(.md-button):hover {
+    color: white;
+}
+
+md-dialog{
+    background-color: #000000;
+    opacity: .85;
+    border-bottom-right-radius: 25px;
+}
+
+md-dialog.md-default-theme {
+    background-color: #000000;
+    opacity: .85;
+    border-bottom-right-radius: 25px;
+}
+
+md-backdrop.md-opaque {
+    opacity: .7;
+}
+
+.md-errors-spacer {
+    float: none;
+}
+
+md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme ._md-placeholder, md-input-container ._md-placeholder {
+    color: #ffffff;
+}
+
+md-input-container.md-default-theme .md-input, md-input-container .md-input {
+    color: #ffffff;
+}
+
+md-input-container.md-default-theme.md-input-has-value:not(.md-input-invalid) label, md-input-container.md-input-has-value:not(.md-input-invalid) label {
+    color: #ffffff;
+}
+
+md-input-container.md-default-theme .md-input::-moz-placeholder, md-input-container .md-input::-moz-placeholder{
+    color: #ffffff;
+}
+
+md-input-container {
+    margin: 0px;
+    vertical-align: unset;
+}
+
+md-input-container .md-input:invalid {
+    box-shadow: 0 0 2px #f69a4a;
+}
+
+md-card.md-default-theme, md-card{
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 5px;
+    border-bottom-right-radius: 25px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 1);
+    min-width: 200px;
+}
+
+md-content.md-default-theme, md-content{
+    color: #ffffff;
+    background-color: transparent;
+}
+
+md-list md-list-item.md-3-line .md-list-item-text h3{
+    color: #ffffff;
+}
+
+.flex{
+    display: none;
 }
 
 /*

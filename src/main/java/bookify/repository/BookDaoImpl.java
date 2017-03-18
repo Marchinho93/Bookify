@@ -58,6 +58,7 @@ public class BookDaoImpl implements BookDao {
 		return em.createNamedQuery("Book.findBySerie", Book.class).setParameter("serie", serie.getCode()).getResultList();
 	}
 	
+	@Transactional
 	public List<Book> findAll(){
 		return em.createNamedQuery("Book.findAll", Book.class).getResultList();
 	}

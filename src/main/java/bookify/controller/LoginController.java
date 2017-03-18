@@ -10,8 +10,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,12 +39,16 @@ public class LoginController {
 		logger.debug(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
 		return SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 	}
+	
+	@RequestMapping(value ="/test", method = RequestMethod.GET)
+	@ResponseBody
+	public String test(){
+		return "omg";
+	}
 
 	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	@RequestMapping(value = "/initAdmin", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public @ResponseBody Administrator data(@RequestParam("id") String id, HttpServletRequest request){
-		CsrfToken token = new HttpSessionCsrfTokenRepository().loadToken(request);
-		logger.debug(token.getToken());
 		return administratorService.findById(id);
 	}
 

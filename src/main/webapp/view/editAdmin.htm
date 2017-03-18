@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<md-content layout-padding>
+    <form name="adminForm">
+        <div layout-gt-sm="row">
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Nome</label>
+                <input class="md-input-has-value" md-maxlength="30" required name="name" ng-model="ctrlDiag.newData.name"/>
+
+                <div ng-messages="adminForm.name.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="md-maxlength">La lunghezza deve essere inferiore a 30 caratteri.</div>
+                </div>
+            </md-input-container>
+
+            <div flex="5" hide-xs hide-sm>
+                <!-- Spacer //-->
+            </div>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Cognome</label>
+                <input class="md-input-has-value" md-maxlength="30" required name="surname" ng-model="ctrlDiag.newData.surname"/>
+
+                <div ng-messages="adminForm.surname.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="md-maxlength">La lunghezza deve essere inferiore a 30 caratteri.</div>
+                </div>
+            </md-input-container>
+
+            <div flex-gt-sm>
+                <label>Birthday</label>
+                <md-datepicker class="md-input-has-value" ng-model="ctrlDiag.newData.birthday" name="birthday"
+                               required></md-datepicker>
+
+                <div ng-messages="adminForm.birthday.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                </div>
+            </div>
+
+            <div flex="5" hide-xs hide-sm>
+                <!-- Spacer //-->
+            </div>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Indirizzo</label>
+                <input class="md-input-has-value" md-maxlength="30" required name="address" ng-model="ctrlDiag.newData.address"/>
+
+                <div ng-messages="adminForm.address.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="md-maxlength">La lunghezza deve essere inferiore a 30 caratteri.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Città</label>
+                <input class="md-input-has-value" md-maxlength="30" required name="city" ng-model="ctrlDiag.newData.city"/>
+
+                <div ng-messages="adminForm.city.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="md-maxlength">La lunghezza deve essere inferiore a 30 caratteri.</div>
+                </div>
+            </md-input-container>
+
+            <div flex="5" hide-xs hide-sm>
+                <!-- Spacer //-->
+            </div>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Telefono</label>
+                <input class="md-input-has-value" md-maxlength="30" required name="phone" ng-model="ctrlDiag.newData.phone"
+                       ng-pattern="/^[0-9]{10}$/"/>
+
+                <div ng-messages="adminForm.phone.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="pattern">Inserisci un numero di telefono valido.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Email</label>
+                <input class="md-input-has-value" md-maxlength="100" required name="email" ng-model="ctrlDiag.newData.email"
+                       ng-pattern="/^.+@.+\..+$/"/>
+
+                <div ng-messages="adminForm.email.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="pattern">Inserisci un indirizzo email valido.</div>
+                </div>
+            </md-input-container>
+
+            <md-button ng-click="ctrlDiag.answer('ok')">Applica</md-button>
+            <md-button ng-click="ctrlDiag.cancel()">Annulla</md-button>
+        </div>
+    </form>
+</md-content>
+</html>
