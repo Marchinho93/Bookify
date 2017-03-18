@@ -20,36 +20,41 @@
 
         <div class="inner cover">
             <div class="container admin">
-                <div layout="row" layout-xs="column">
-                    <md-list flex-gt-xs="100">
-                        <md-subheader class="md-no-sticky">Lista dei libri registrati
-                            <input type="text" ng-model="keyword" placeholder="Cerca..."/></md-subheader>
-                        <md-list-item class="md-3-line  md-long-text" ng-repeat="book in bookCtrl.bookList | filter:{code:keyword,title:keyword,editor:keyword}">
-                            <md-content class="container admin">
-                                <div class="md-list-item-text layout-row" flex-gt-xs="100" layout="row" style="margin: auto;">
-                                    <div flex-gt-xs="90">
-                                        <h3>Codice:{{ book.code }}</h3>
-                                        <span><h3>Titolo:{{ book.title }}</h3></span>
-                                        <span><h3>Editore:{{ book.editor }}</h3></span>
-                                        <span>Autori:</span>
-                                        <span ng-repeat="author in book.authors">
-                                            <h3>Nome:{{author.name}}</h3>
-                                        <h3>Cognome:{{author.surname}}</h3>
-                                        </span>
-                                    </div>
-                                    <div flex-gt-xs="15">
-                                        <md-button>Modifica</md-button>
-                                        <md-button>Rimuovi</md-button>
-                                    </div>
-                                </div>
-                            </md-content>
-                        </md-list-item>
-                    </md-list>
-                </div>
+
+                <md-subheader class="md-no-sticky" style="margin-top:2%">Lista dei libri registrati
+                    <input type="text" ng-model="keyword" placeholder="Cerca..."/></md-subheader>
+
+                <table class="table table-hover table-condensed">
+                    <tr>
+                        <th>
+                            Titolo
+                        </th>
+                        <th>
+                            Editore
+                        </th>
+                        <th>
+                            Codice
+                        </th>
+                        <th>Autore</th>
+                    </tr>
+                    <tr ng-repeat="book in bookCtrl.bookList | filter:{title:keyword}">
+                        <td>
+                            {{book.title}}
+                        </td>
+                        <td>
+                            {{book.editor}}
+                        </td>
+                        <td>
+                            {{book.code}}
+                        </td>
+                        <td ng-repeat="author in book.authors">{{book.author.name}} {{book.author.name}}</td>
+                    </tr>
+                </table>
             </div>
+
         </div>
-    </div>
-</div>
+
+
 
 
 <div class="mastfoot">
@@ -60,7 +65,6 @@
         </p>
     </div>
 </div>
-
 </div>
 </div>
 </html>
