@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html>
-
-<div class="container maincontainer">
-    <div class="cover-container">
-
-        <div class="masthead clearfix">
-            <div class="inner">
-                <h3 class="masthead-brand">
-                    <ng-md-icon style="fill:white" icon="book" size="30"></ng-md-icon>
-                    <b>Bookify</b>
-                </h3>
-                <nav>
-                    <ul class="nav masthead-nav">
-                        <li ng-repeat="link in menu" ng-class="{active : activeMenu === link.label}"><a
-                                href="#{{link.link}}" ng-click="setActive(link.label)"><b>{{link.label}}</b></a></li>
-                    </ul>
-                </nav>
-            </div>
+<md-toolbar class="fixed">
+    <div layout="row" layout-xs="column">
+        <div class="md-toolbar-tools" flex-gt-xs="50" layout-align-gt-xs="start center" layout-align-xs="center center">
+            <ng-md-icon style="fill:white" icon="book" size="30"></ng-md-icon>
+            <b>Bookify</b>
         </div>
-
-
-        <div class="inner cover">
-            <div class="jumbotron home">
-                <h1 class="cover-heading">Biblioteca</h1>
-                <p class="lead">Gestore per l'organizzazione dei libri e i prestiti
-                    agli iscritti.</p></div>
+        <div class="md-toolbar-tools" flex-gt-xs="50" layout-align-gt-xs="end center" layout-align-xs="center center">
+            <md-button class="md-raised md-primary" aria-label="Learn More"
+                       ng-repeat="link in menu" ng-class="{active : activeMenu === link.label}">
+                <b>{{link.label}}</b>
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="loginDiag()">
+                <b>Login</b>
+            </md-button>
         </div>
-
-        <div class="mastfoot">
-            <div class="inner">
-                <p>
-                    Cover template for <a href="http://getbootstrap.com">Bootstrap</a>,
-                    by <a href="https://twitter.com/mdo">@mdo</a>.
-                </p>
-            </div>
-        </div>
-
     </div>
+</md-toolbar>
 
+<div class="wrapper">
+    <div class="container" layout="row" layout-xs="column" layout-align="center center">
+        <div flex-gt-xs="50" layout-align-gt-xs="center center" layout-align-xs="center center">
+            <div class="homeWrapper">
+                <div class="homeContainer">
+                    <div style="display: inline-flex;"><ng-md-icon style="fill:white;" icon="book" size="45"></ng-md-icon><h1 style="margin-top: 5px; margin-bottom: 5px;">Bookify</h1></div>
+                    <p>Gestore per l'organizzazione dei libri e i prestiti
+                        agli iscritti.</p>
+                    <p></p>
+                    <div class="divider"></div>
+                    <p><b>1.</b>Effettua il <b>login</b>.</p>
+                    <p><b>2.</b>Scegli il servizio che preferisci.</p>
+                    <p><b>3.</b>Gestisci la libreria in modo semplice ed efficace.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 </html>

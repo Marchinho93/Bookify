@@ -139,7 +139,7 @@ bookify.factory('authEngine', ['$http', 'authUtility', 'session', 'sessionCacheS
                                 return new Error("dbError");
                             });
                         });
-                    } //non funziona, metter dentro e finire implementazione
+                    }
 
                 })
                 .error(function () {
@@ -250,7 +250,6 @@ bookify.factory('sessionCacheService', ['localStorageService', 'session', '$loca
             session.setAuthUser(null);
             session.setCreated(null);
         }
-        ;
         return {
             saveSession: function () {
                 localStorageService.set('authenticated', session.getAuthenticated());
@@ -276,44 +275,63 @@ bookify.factory('sessionCacheService', ['localStorageService', 'session', '$loca
     }
 }]);
 
+bookify.factory('loginUtility', ['$mdDialog', function ($mdDialog) {
+    return {
+        loginDiag: function ($event) {
+            $mdDialog.show({
+                controller: "mainDiagCtrl",
+                controllerAs: "ctrl",
+                templateUrl: 'view/login.htm',
+                parent: angular.element(popupContainer),
+                targetEvent: $event,
+                clickOutsideToClose: true
+            });
+        }
+    };
+    }]);
+
 bookify.service('adminUtility', ['$http', 'session', 'sessionCacheService', '$mdDialog', 'authUtility', '$rootScope', function ($http, session, sessionCacheService, $mdDialog, authUtility, $rootScope) {
-   var self = this;
-   self.adminData = session.getAuthUser();
+    var self = this;
+    self.adminData = session.getAuthUser();
 
     self.editAdmin =
         function ($event) {
+
             $mdDialog.show({
-            controller: "adminDiagCtrl",
-            controllerAs: 'ctrlDiag',
-            templateUrl: 'view/editAdmin.htm',
-            parent: angular.element(popupContainer),
-            targetEvent: $event,
-            clickOutsideToClose: false
-        }).then(function (answer) {
-            if (answer == "ok") {
-                var packet = {
-                    'code': self.adminData.code,
-                    'id': self.adminData.id,
-                    'name': self.adminData.name,
-                    'surname': self.adminData.surname,
-                    'birthday': self.adminData.birthday,
-                    'address': self.adminData.address,
-                    'phone': self.adminData.phone,
-                    'city': self.adminData.city,
-                    'email': self.adminData.email
-                };
-                $http.post("editAdmin", packet).success(function (data) {
-                    admin = authUtility.setAdminData(data);
-                    session.setAuthUser(admin);
-                    sessionCacheService.saveSession();
-                    $rootScope.$broadcast('updated');
-                }).error(function () {
-                    $rootScope.$broadcast('updated');
-                });
-            }
-        }, function () {
-               $rootScope.$broadcast('updated');
-        });
+                controller: "adminDiagCtrl",
+                controllerAs: 'ctrlDiag',
+                templateUrl: 'view/editAdmin.htm',
+                parent: angular.element(popupContainer),
+                targetEvent: $event,
+                clickOutsideToClose: false
+
+            }).then(function (answer) {
+                if (answer == "ok") {
+
+                    var packet = {
+                        'code': self.adminData.code,
+                        'id': self.adminData.id,
+                        'name': self.adminData.name,
+                        'surname': self.adminData.surname,
+                        'birthday': self.adminData.birthday,
+                        'address': self.adminData.address,
+                        'phone': self.adminData.phone,
+                        'city': self.adminData.city,
+                        'email': self.adminData.email
+
+                    };
+                    $http.post("editAdmin", packet).success(function (data) {
+                        admin = authUtility.setAdminData(data);
+                        session.setAuthUser(admin);
+                        sessionCacheService.saveSession();
+                        $rootScope.$broadcast('updated');
+                    }).error(function () {
+                        $rootScope.$broadcast('updated');
+                    });
+                }
+            }, function () {
+                $rootScope.$broadcast('updated');
+            });
         };
 
     self.writeEditedAdminData = function (data) {
@@ -321,15 +339,15 @@ bookify.service('adminUtility', ['$http', 'session', 'sessionCacheService', '$md
     };
 }]);
 
-bookify.service('bookManager', ['$http', '$rootScope', 'exceptionHandler', function($http, $rootScope, exceptionHandler){
+bookify.service('bookManager', ['$http', '$rootScope', 'exceptionHandler', function ($http, $rootScope, exceptionHandler) {
     var self = this;
     self.bookList = "";
-    self.populate = function (){
+    self.populate = function () {
         $http.get('findAll')
-        .success(function(data){
-            self.bookList = data;
-            $rootScope.$broadcast('updated');
-        }).error(function (){
+            .success(function (data) {
+                self.bookList = data;
+                $rootScope.$broadcast('updated');
+            }).error(function () {
             exceptionHandler.dbAlert();
         });
     };

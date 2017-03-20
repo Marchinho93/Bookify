@@ -1,31 +1,22 @@
-bookify.controller("mainCtrl", function ($scope) {
+bookify.controller("mainCtrl", function ($scope, loginUtility) {
+
+    $scope.loginDiag = function($event){
+        loginUtility.loginDiag($event);
+    };
 
     $scope.activeMenu = "Home";
 
     $scope.menu = [{
         "label": "Home",
         "link": "/"
-    }, {
-        "label": "Login",
-        "link": "/login"
     }];
 });
 
-bookify.controller("loginCtrl", function ($scope, authEngine) {
-
-    $scope.activeMenu = "Login";
-
-    $scope.menu = [{
-        "label": "Home",
-        "link": "/"
-    }, {
-        "label": "Login",
-        "link": "/login"
-    }];
-
+bookify.controller('mainDiagCtrl', function($scope, $mdDialog, authEngine){
     $scope.login = function () {
         authEngine.login($scope.id, $scope.password);
-    }
+        $mdDialog.hide();
+    };
 });
 
 bookify.controller("adminCtrl", function ($scope, authEngine, session, adminUtility) {

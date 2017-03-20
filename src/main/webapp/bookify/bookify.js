@@ -7,10 +7,6 @@ bookify.config(function ($routeProvider,localStorageServiceProvider) {
             templateUrl: "view/main.htm",
             controller: "mainCtrl"
         })
-        .when("/login", {
-            templateUrl: "view/login.htm",
-            controller: "loginCtrl"
-        })
         .when("/admin", {
             templateUrl: "view/admin.htm",
             controller: "adminCtrl",
