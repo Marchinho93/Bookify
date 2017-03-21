@@ -1,6 +1,6 @@
 bookify.controller("mainCtrl", function ($scope, loginUtility) {
 
-    $scope.loginDiag = function($event){
+    $scope.loginDiag = function ($event) {
         loginUtility.loginDiag($event);
     };
 
@@ -12,14 +12,14 @@ bookify.controller("mainCtrl", function ($scope, loginUtility) {
     }];
 });
 
-bookify.controller('mainDiagCtrl', function($scope, $mdDialog, authEngine){
+bookify.controller('mainDiagCtrl', function ($scope, $mdDialog, authEngine) {
     $scope.login = function () {
         authEngine.login($scope.id, $scope.password);
         $mdDialog.hide();
     };
 });
 
-bookify.controller("adminCtrl", function ($scope, authEngine, session, adminUtility) {
+bookify.controller("adminCtrl", function ($scope, authEngine, session, adminUtility, $mdSidenav) {
     var self = this;
     if (authEngine.authRequired('ADMIN') == true) {
         self.adminData = session.authUser;
@@ -33,6 +33,14 @@ bookify.controller("adminCtrl", function ($scope, authEngine, session, adminUtil
             "label": "Logout",
             "link": "/logout"
         }];
+
+        $scope.toggleLeft = function(navID){
+            $mdSidenav(navID).toggle()
+        };
+
+        $scope.close = function(navId){
+            $mdSidenav(navId).close()
+        };
 
         $scope.editAdmin = function ($event) {
             adminUtility.editAdmin($event);

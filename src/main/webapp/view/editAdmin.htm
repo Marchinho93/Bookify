@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <md-content layout-padding>
     <form name="adminForm">
-        <div layout-gt-sm="row">
+        <div layout-gt-xs="column" layout-xs="column">
 
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Nome</label>
@@ -28,7 +28,7 @@
                 </div>
             </md-input-container>
 
-            <div flex-gt-sm>
+            <md-input-container class="md-block" flex-gt-sm>
                 <label>Birthday</label>
                 <md-datepicker class="md-input-has-value" ng-model="ctrlDiag.newData.birthday" name="birthday"
                                required></md-datepicker>
@@ -36,7 +36,7 @@
                 <div ng-messages="adminForm.birthday.$error">
                     <div ng-message="required">Campo necessario.</div>
                 </div>
-            </div>
+            </md-input-container>
 
             <div flex="5" hide-xs hide-sm>
                 <!-- Spacer //-->
