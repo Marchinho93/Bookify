@@ -1,5 +1,6 @@
 package bookify.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -29,15 +30,15 @@ public class Serie {
 	@Column(nullable = false)
 	private String name;
 	
-	@OneToMany(mappedBy="serie",cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy="serie")
 	@JsonIgnore
 	private List<Book> books;
 	
 	public Serie(){}
 	
-	public Serie(String name, List<Book> books) {
+	public Serie(String name) {
 		this.name = name;
-		this.books = books;
+		this.books = new ArrayList<>();
 	}
 	
 	public long getCode(){

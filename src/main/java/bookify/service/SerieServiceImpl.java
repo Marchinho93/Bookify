@@ -20,8 +20,8 @@ public class SerieServiceImpl implements SerieService{
 		return serie;
 	}
 	
-	public Serie create(String name, List<Book> books){
-		Serie serie = new Serie(name, books);
+	public Serie create(String name){
+		Serie serie = new Serie(name);
 		serieDao.create(serie);
 		return serie;
 	}

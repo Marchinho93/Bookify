@@ -4,6 +4,7 @@ body {
     background: #1f1c18;
     background-image: url("p1.png"), url("p2.png");
     background-repeat: repeat-x, repeat;
+    background-attachment: fixed;
     color: #fff;
     text-align: center;
     text-shadow: 0 1px 3px rgba(0,0,0,.5);
@@ -21,6 +22,19 @@ span{
     display: inline-flex;
 }
 
+tr{
+    background-color: rgba(0,0,0,.5);
+    color: white;
+}
+
+table{
+    width: 90%;
+    border-collapse: collapse;
+}
+
+.hoverTable tr:hover {
+    background-color: rgb(63,81,181);
+}
 
 
 /*CSS data wrapper*/
@@ -251,5 +265,32 @@ md-content.transparent{
 
 .md-whiteframe-4dp{
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.14), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 5px rgba(0, 0, 0, 1);
+}
+
+/*CSS Navbar*/
+md-nav-bar .md-nav-bar{
+    background-color: rgba(0,0,0,.5);
+}
+
+md-nav-bar md-nav-ink-bar{
+background-color: rgb(63,81,181);
+}
+
+md-nav-bar .md-button._md-nav-button.md-unselected{
+    color: white;
+}
+
+/*CSS Outside content*/
+.md-subheader .md-subheader-inner{
+    background-color: rgba(0,0,0,.5);
+    color:white;
+}
+.md-subheader{
+    background-color: transparent;
+}
+
+/*CSS Book manager*/
+.selected{
+    background-color: rgb(35, 35, 35);
 }
 /*/*/

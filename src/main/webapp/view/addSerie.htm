@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<md-content layout-padding>
+    <form name="adminForm">
+        <div layout-gt-xs="column" layout-xs="column">
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Nome</label>
+                <input class="md-input-has-value" md-maxlength="30" required name="name" ng-model="newSer.name"/>
+
+                <div ng-messages="adminForm.name.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="md-maxlength">La lunghezza deve essere inferiore a 30 caratteri.</div>
+                </div>
+            </md-input-container>
+
+            <div flex="5" hide-xs hide-sm>
+                <!-- Spacer //-->
+            </div>
+
+
+            <md-button ng-click="answer(newSer)">Inserisci</md-button>
+            <md-button ng-click="cancel()">Annulla</md-button>
+        </div>
+    </form>
+</md-content>
+</html>

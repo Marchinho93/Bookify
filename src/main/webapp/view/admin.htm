@@ -10,8 +10,9 @@
             <md-button ng-click="toggleLeft('left')" class="md-raised md-primary" hide-gt-md>
                 <b>{{ctrl.adminData.name}}</b>
             </md-button>
-            <md-button class="md-raised md-primary" aria-label="Learn More"
-                       ng-repeat="link in menu" ng-class="{active : activeMenu === link.label}">
+            <md-button class="md-raised md-primary" aria-label="menu"
+                       ng-repeat="link in menu" ng-class="{active : activeMenu === link.label}"
+                       ng-href="#{{link.link}}">
                 <b>{{link.label}}</b>
             </md-button>
         </div>
@@ -19,13 +20,12 @@
 </md-toolbar>
 
 <div class="wrapper">
-    <div class="container" layout="row" layout-xs="column" layout-align="center center" style="height:500px;">
-        <div flex-xs="100" flex-gt-xs="100" layout="column" style="height:500px" layout-align-xs="start center">
+    <div class="container" style="height:500px;">
+        <div layout="column" style="height:500px">
+            <section layout="row">
 
-            <section layout="row" flex="">
-
-                <md-sidenav class="md-sidenav-left rightbordered" md-component-id="left" md-whiteframe="4" md-is-locked-open="$mdMedia('gt-md')" layout-align-xs="start center">
-
+                <md-sidenav class="md-sidenav-left rightbordered" md-component-id="left" md-whiteframe="4"
+                            md-is-locked-open="$mdMedia('gt-md')" layout-align-xs="start center">
                     <md-toolbar class="md-theme-indigo">
                         <h1 class="md-toolbar-tools">Pannello Utente</h1>
                     </md-toolbar>
@@ -41,7 +41,7 @@
                     </md-content>
                     <md-content>
                       <span>  <p class="label">
-                          Birthday:</p><p> {{ctrl.adminData.birthday}}
+                          Birthday:</p><p> {{ctrl.adminData.birthday | date:"dd/MM/yyyy"}}
                       </p></span>
                     </md-content>
                     <md-content>
@@ -65,26 +65,34 @@
                       </p></span>
                     </md-content>
                     <md-content layout-align="end center">
-                    <md-button ng-click="editAdmin($event)">Modifica Dati</md-button>
+                        <md-button ng-click="editAdmin($event)">Modifica Dati</md-button>
                     </md-content>
                     <md-content>
-                    <md-button layout-align="end center" ng-click="close('left')" hide-gt-md>
-                        Chiudi
-                    </md-button>
+                        <md-button layout-align="end center" ng-click="close('left')" hide-gt-md>
+                            Chiudi
+                        </md-button>
                     </md-content>
                 </md-sidenav>
 
-                <md-content class="transparent" flex="" layout-padding="">
-
-                    <div layout="column" layout-align="top center">
-                        <div>
-                            <div>
-
-                            </div>
-                        </div>
+                <div flex-gt-xs="100">
+                    <div flex-gt-xs="100" layout-align="center center">
+                        <md-content class="md-padding transparent">
+                            <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+                                <md-nav-item md-nav-click="select('view/bookManager.htm')" name="bookManager">
+                                    Book Manager
+                                </md-nav-item>
+                                <md-nav-item md-nav-click="select('view/bookManager.htm')" name="loanManager">
+                                    Loan Manager
+                                </md-nav-item>
+                                <md-nav-item md-nav-click="select('view/bookManager.htm')" name="userManager">
+                                    User Manager
+                                </md-nav-item>
+                            </md-nav-bar>
+                        </md-content>
                     </div>
-                </md-content>
-
+                    <div flex-gt-xs="100" ng-include="content">
+                    </div>
+                </div>
 
             </section>
 

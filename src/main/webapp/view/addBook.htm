@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<md-content class="transparent" layout-padding>
+    <form name="adminForm">
+        <div layout-gt-xs="column" layout-xs="column">
+            <div layout-gt-xs="row" layout-xs="column">
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Titolo</label>
+                <input md-maxlength="30" required name="title" ng-model="newBook.title"/>
+
+                <div ng-messages="adminForm.title.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="md-maxlength">La lunghezza deve essere inferiore a 30 caratteri.</div>
+                </div>
+            </md-input-container>
+
+            <div flex="5" hide-xs hide-sm>
+                <!-- Spacer //-->
+            </div>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Anno</label>
+                <input md-maxlength="30" required name="year" ng-model="newBook.year" ng-pattern="/^[0-9]{4}$/"/>
+
+                <div ng-messages="adminForm.year.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="pattern">Sono ammessi solo valori numerici.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Posizione</label>
+                <input ng-model="newBook.position" name="position" required />
+
+                <div ng-messages="adminForm.position.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                </div>
+            </md-input-container>
+
+            <div flex="5" hide-xs hide-sm>
+                <!-- Spacer //-->
+            </div>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Editore</label>
+
+                <input md-maxlength="30" required name="editor" ng-model="newBook.editor"/>
+                <div ng-messages="adminForm.editor.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                    <div ng-message="md-maxlength">La lunghezza deve essere inferiore a 30 caratteri.</div>
+                </div>
+            </md-input-container>
+            </div>
+            <div layout-gt-xs="row" layout-xs="column">
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Ricerca Categoria</label>
+                    <div><input type="text" ng-model="cKey"/></div>
+                <div style="display: inline-block;overflow-y: scroll;height: 90px;width: 99%;">
+                <table class="hoverTable" style="width: 100%;">
+                    <tr ng-repeat="c in bookCtrl.categoryList | filter:{name:cKey}" ng-class="{'selected' : newBook.category.name === c.name}">
+                        <td ng-click="toggleCategory(c)">{{c.name}}</td>
+                    </tr>
+                </table>
+                </div>
+                <md-button ng-click="addNewCategory($event)">Aggiungi Categoria</md-button>
+                <div ng-messages="adminForm.category.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                </div>
+            </md-input-container>
+
+            <div flex="5" hide-xs hide-sm>
+                <!-- Spacer //-->
+            </div>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Ricerca Autore</label>
+                    <div><input type="text" ng-model="aKey"/></div>
+                <div style="display: inline-block;overflow-y: scroll;height: 90px;width: 99%;">
+                <table class="hoverTable" style="width: 100%;">
+                    <tr ng-repeat="a in bookCtrl.authorList | filter:{name:aKey}" ng-class="{'selected' : newBook.authors.indexOf(a) !== -1}">
+                        <td ng-click="toggleAuthor(a)">{{a.name}} {{a.surname}}</td>
+                    </tr>
+                </table>
+                </div>
+                <md-button ng-click="addNewAuthor($event)">Aggiungi Autore</md-button>
+                <div ng-messages="adminForm.authors.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Ricerca Serie</label>
+                    <div><input type="text" ng-model="sKey"/></div>
+                <div style="display: inline-block;overflow-y: scroll;height: 90px;width: 99%;">
+                <table class="hoverTable" style="width: 100%;">
+                    <tr ng-repeat="s in bookCtrl.serieList | filter:{name:sKey}" ng-class="{'selected' : newBook.serie.name === s.name}">
+                        <td ng-click="toggleSerie(s)">{{s.name}}</td>
+                    </tr>
+                </table>
+                </div>
+                <md-button ng-click="addNewSerie($event)">Aggiungi Serie</md-button>
+                <div ng-messages="adminForm.serie.$error">
+                    <div ng-message="required">Campo necessario.</div>
+                </div>
+            </md-input-container>
+
+            <md-button type="submit" ng-click="addBook()">Inserisci</md-button>
+            <md-button type="button" ng-click="abort()">Annulla</md-button>
+            </div>
+        </div>
+    </form>
+</md-content>
+</html>

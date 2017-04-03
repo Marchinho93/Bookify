@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<md-toolbar class="md-theme-indigo">
+    <h1 class="md-toolbar-tools">Dettagli libro</h1>
+</md-toolbar>
+<md-content>
+                       <span><p class="label">
+                            Titolo: </p><p>{{selectedBook.title}}
+                       </p></span>
+</md-content>
+<md-content>
+                        <span><p class="label">
+                            Autore:</p><p ng-repeat="a in selectedBook.authors"> {{a.name}} {{a.surname}}
+                        </p></span>
+</md-content>
+<md-content>
+                      <span>  <p class="label">
+                          Editore:</p><p> {{selectedBook.editor}}
+                      </p></span>
+</md-content>
+<md-content>
+                       <span> <p class="label">
+                           Anno:</p><p> {{selectedBook.year}}
+                       </p></span>
+</md-content>
+<md-content>
+                       <span> <p class="label">
+                           Categoria:</p><p> {{selectedBook.category.name}}
+                       </p></span>
+</md-content>
+<md-content>
+                       <span> <p class="label">
+                            Serie:</p><p> {{selectedBook.serie.name}}
+                       </p></span>
+</md-content>
+<md-content>
+                      <span>  <p class="label">
+                            Posizione:</p><p> {{selectedBook.position}}
+                      </p></span>
+</md-content>
+<md-content>
+    <md-button ng-click="editBook('edit')">Modifica</md-button>
+    <md-button ng-click="deleteBook('del')">Elimina</md-button>
+    <md-button ng-click="cancel()">Chiudi</md-button>
+</md-content>
+</html>

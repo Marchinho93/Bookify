@@ -187,9 +187,7 @@ bookify.factory('exceptionHandler', ['$mdDialog', '$location', function ($mdDial
                     .textContent('Please, retry later')
                     .ariaLabel('Alert')
                     .ok('Ok')
-            ).then(function () {
-                $location.path("login");
-            });
+            );
         },
         loginAlert: function () {
             $mdDialog.show(
@@ -212,11 +210,9 @@ bookify.factory('exceptionHandler', ['$mdDialog', '$location', function ($mdDial
                     .textContent("You don't have enough permission for this action")
                     .ariaLabel('Alert')
                     .ok('Ok')
-            ).then(function () {
-            });
+            );
         },
         cacheAlert: function () {
-            console.log("nada");
             $mdDialog.show(
                 $mdDialog.alert()
                     .parent(angular.element(document.querySelector('#popupContainer')))
@@ -225,8 +221,7 @@ bookify.factory('exceptionHandler', ['$mdDialog', '$location', function ($mdDial
                     .textContent("Your browser isn't compatible with local storage.")
                     .ariaLabel('Alert')
                     .ok('Ok')
-            ).then(function () {
-            });
+            );
         }
     };
 }]);
@@ -342,13 +337,57 @@ bookify.service('adminUtility', ['$http', 'session', 'sessionCacheService', '$md
 bookify.service('bookManager', ['$http', '$rootScope', 'exceptionHandler', function ($http, $rootScope, exceptionHandler) {
     var self = this;
     self.bookList = "";
+    self.authorList = "";
+    self.categoryList = "";
+    self.serieList = "";
+
+    self.selectedBook = {};
+
     self.populate = function () {
-        $http.get('findAll')
+        $http.get('findAllBooks')
             .success(function (data) {
                 self.bookList = data;
-                $rootScope.$broadcast('updated');
+                $rootScope.$broadcast('updatedBooksList');
             }).error(function () {
             exceptionHandler.dbAlert();
         });
+        $http.get('findAllAuthors').success(function (data) {
+            self.authorList = data;
+            $rootScope.$broadcast('updatedAuthorsList');
+        }).error(function () {
+            exceptionHandler.dbAlert();
+        });
+        $http.get('findAllCategories').success(function (data) {
+            self.categoryList = data;
+            $rootScope.$broadcast('updatedCategoriesList');
+        }).error(function () {
+            exceptionHandler.dbAlert();
+        });
+        $http.get('findAllSeries').success(function (data) {
+            self.serieList = data;
+            $rootScope.$broadcast('updatedSeriesList');
+        }).error(function () {
+            exceptionHandler.dbAlert();
+        });
+    };
+    self.addBook = function (newBook){
+        if(newBook.title!='' && newBook.year!='' && newBook.position!='' && newBook.editor!='' && newBook.category!='' && newBook.authors!='' && newBook.serie!='') {
+            var packet = {
+                'title': newBook.title,
+                'year': newBook.year,
+                'position': newBook.position,
+                'editor': newBook.editor,
+                'category': newBook.category,
+                'authors': newBook.authors,
+                'serie': newBook.serie
+            };
+            $http.post('addBook', packet).success(function (data) {
+                self.bookList.push(data);
+                $rootScope.$broadcast('updatedBooksList');
+                $rootScope.$broadcast('getBack');
+            }).error(function () {
+                exceptionHandler.dbAlert();
+            });
+        }
     };
 }]);

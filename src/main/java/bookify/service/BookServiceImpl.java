@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
 	
 	public Book create(String title, int year, String position, String editor, Category category, List<Author> authors, Serie serie){
 		Book book  = new Book(title, year, position, editor, category, authors, serie);
-		bookDao.create(book);
+		bookDao.update(book);
 		return book;
 	}
 	

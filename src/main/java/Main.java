@@ -31,17 +31,17 @@ public class Main {
 		
 		
 		
-		Category c1 = new Category("Avventura", "Libri belli molto");
+		Category c1 = new Category("Avventura", "Libri");
 		Author a1 = new Author("marco", "br");
 		List<Author> al1 = new ArrayList<>();
 		al1.add(a1);
 		Book b1 = new Book("Ciao", 2010, "F2", "lemure", c1, al1, null);
 		List<Book> bl1 = new ArrayList<>();
 		bl1.add(b1);
-		Serie s1 = new Serie("cavalli", bl1);
+		Serie s1 = new Serie("cavalli");
 		b1.setSerie(s1);
 		
-		Administrator adm1 = new Administrator("peppe", "ficco", "mario", "biondi", new Date(10,11,1993), "via lepre", "322324242", "roma" , "asdawd@yahoo.it");
+		Administrator adm1 = new Administrator("peppe", "giovanni", "mario", "biondi", new Date(10,11,1993), "via lepre", "322324242", "roma" , "asdawd@yahoo.it");
 		User u1 = new User("pino", "daniele", "pino", "daniele", new Date(2,12,1960), new Date(10,11,1993), "via lepre", "322324242", "roma" , "asdawd@yahoo.it");
 		Loan l1 = new Loan(new Date(3,3,2017), null, b1, u1);
 		em.getTransaction().begin();

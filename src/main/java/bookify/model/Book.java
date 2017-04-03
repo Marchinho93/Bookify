@@ -42,14 +42,14 @@ public class Book {
 	private String editor;
 
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "category_code", referencedColumnName = "code")
 	private Category category;
 
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@ManyToMany(cascade ={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
 	private List<Author> authors;
 	
-	@ManyToOne()
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Serie serie;
 
 	public Book(){};

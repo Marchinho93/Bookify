@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<md-subheader class="md-no-sticky" flex-gt-xs="20" flex-xs="100" style="margin-top:2%"
+              layout-align="start center"><p>Ricerca libri:</p>
+    <div>Codice:</div>
+    <div><input type="text" ng-model="codeKey" placeholder="Codice"/></div>
+    <div>Titolo:</div>
+    <div><input type="text" ng-model="titleKey" placeholder="Titolo"/></div>
+    <div>Autore:</div>
+    <div><input type="text" ng-model="authorNameKey" placeholder="Nome"/></div>
+    <div>
+        <input type="text" ng-model="authorSurnameKey" placeholder="Cognome"/></div>
+    <div class="divider" style="margin-top:3%"></div>
+    <p>Azioni:</p>
+    <md-content>
+        <md-button layout-align="end center" ng-click="selectAction('view/addBook.htm')">
+            Aggiungi Libro
+        </md-button>
+    </md-content>
+</md-subheader>
+
+<table class="hoverTable" flex-gt-xs="80" flex-xs="100">
+    <tr>
+        <th ng-click="orderBy('code')" ng-class="{selected : orderLabel === 'code'}">
+            Codice
+        </th>
+        <th ng-click="orderBy('title')" ng-class="{selected : orderLabel === 'title'}">
+            Titolo
+        </th>
+        <th ng-click="orderBy('author')" ng-class="{selected : orderLabel === 'author'}">Autore</th>
+    </tr>
+    <tr ng-repeat="book in bookCtrl.bookList | orderBy:orderLabel | filter:{code:codeKey, title:titleKey} | findByAuthor:authorNameKey:authorSurnameKey"
+        ng-click="getDetails(book, $event)">
+        <td>
+            {{book.code}}
+        </td>
+        <td>
+            {{book.title}}
+        </td>
+        <td><p ng-repeat="author in book.authors">
+            {{author.name}} {{author.surname}}</p></td>
+    </tr>
+</table>
+</html>

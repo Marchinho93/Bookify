@@ -9,7 +9,7 @@ public interface SerieService {
 
 	Serie create(Serie serie);
 
-	Serie create(String name, List<Book> books);
+	Serie create(String name);
 
 	Serie findByName(String name);
 
